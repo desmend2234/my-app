@@ -1,0 +1,46 @@
+.heading {
+  display: flex;
+  justify-content: center;
+  width: 25rem;
+  background: rgba(182, 229, 226, 0.8);
+  margin-left: 20%;
+  margin-right: 20%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  transition: all 0.3s ease-in;
+  position: absolute;
+}
+
+.heading:hover {
+  transform: scale(1.03);
+  background-color: rgba(182, 229, 226, 0.95);
+  cursor: pointer;
+}
+
+.card {
+  transition: transform 0.7s;
+}
+.card .img-wrapper {
+  position: relative;
+}
+.card .img-wrapper img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 250px;
+  opacity: 1;
+  transition: all 0.3s ease-in;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+.card:hover img {
+  opacity: 0.6;
+}
+.card:hover .deatil-icon {
+  opacity: 1;
+}
+
+.product-detail img:hover {
+  cursor: pointer;
+  opacity: 0.9;
+}/*# sourceMappingURL=Home.css.map */
