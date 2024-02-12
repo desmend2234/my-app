@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap');
+
 @import 'bootstrap/scss/functions';
-@import './_variables';
+@import './variables';
 @import 'bootstrap/scss/bootstrap';
+
+@import './custom.scss';
 @import './_utilities';
 @import './Home.scss';
-@import './FindPlace/FindPlace.scss';
-@import './SwiperGallery.scss';
+@import './Product.scss';

@@ -1,184 +1,276 @@
-import { Link, useOutletContext } from 'react-router-dom';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import ReactFullpage from '@fullpage/react-fullpage';
+import gsap from 'gsap';
+import { Link } from 'react-router-dom';
 import Loading from '../../components/Loading';
-import { useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
+import { ProductContext } from '../store/ProductStore';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { SwiperNavButtons } from '../../components/SwiperNavButtons';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import { getProduct, getAllProduct } from '../store/ProductStore';
 
 function Home() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [pagination, setPagination] = useState({});
-  const { products } = useOutletContext();
+  const [isLoading, setIsLoading] = useState(true);
+  const [state, dispatch] = useContext(ProductContext);
+  AOS.init();
+
+  useEffect(() => {
+    getAllProduct(dispatch);
+  }, []);
+
+  useEffect(() => {
+    // 假設首頁加載完成後需要做一些異步操作，這裡使用setTimeout模擬
+    const timer = setTimeout(() => {
+      setIsLoading(false); // 加載完成後將isLoading設為false
+    }, 1000); // 假設加載完成時間為1秒
+
+    // 清除定時器
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const loading = () => {
+      gsap.fromTo(
+        '.upper h2',
+        { autoAlpha: 0 },
+        { autoAlpha: 1, y: 10, duration: 1 }
+      );
+      gsap.fromTo(
+        '.upper p',
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: 0.8, delay: 0.4 }
+      );
+      gsap.fromTo(
+        '.btn1',
+        { autoAlpha: 0, x: -20 },
+        { autoAlpha: 1, x: 0, duration: 0.8, delay: 0.8 }
+      );
+      gsap.fromTo(
+        '.btn2',
+        { autoAlpha: 0, x: 20 },
+        { autoAlpha: 1, x: 0, duration: 0.8, delay: 0.8 }
+      );
+      gsap.fromTo(
+        '.arrow',
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: 0.8, delay: 1.2 }
+      );
+    };
+    if (!isLoading) {
+      loading();
+    }
+  }, [isLoading]);
+
+  const handleLeave = () => {
+    const loading2 = () => {
+      gsap.fromTo(
+        '.upper ',
+        { autoAlpha: 0, y: 0 },
+        { autoAlpha: 1, y: 10, duration: 1.5 }
+      );
+      gsap.fromTo(
+        '.lower ',
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: 1.3, delay: 0.6 }
+      );
+      gsap.fromTo(
+        '.prompt-text',
+        { autoAlpha: 0, x: -50 },
+        { autoAlpha: 1, x: 0, duration: 1 }
+      );
+    };
+    console.log('handleLeave');
+    loading2();
+  };
   return (
     <>
-      <div id='carouselExampleDark' className='carousel carousel-dark slide'>
+      {isLoading ? (
         <Loading isLoading={isLoading} />
-        <div className='carousel-indicators'>
-          <button
-            type='button'
-            data-bs-target='#carouselExampleDark'
-            data-bs-slide-to='0'
-            className='active'
-            aria-current='true'
-            aria-label='Slide 1'
-          ></button>
-          <button
-            type='button'
-            data-bs-target='#carouselExampleDark'
-            data-bs-slide-to='1'
-            aria-label='Slide 2'
-          ></button>
-          <button
-            type='button'
-            data-bs-target='#carouselExampleDark'
-            data-bs-slide-to='2'
-            aria-label='Slide 3'
-          ></button>
-        </div>
-        <div className='carousel-inner'>
-          <div className='carousel-item active ' data-bs-interval='10000'>
-            <img
-              src='https://images.unsplash.com/photo-1553603227-2358aabe821e?q=80&w=2532&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-              className='d-block w-100 object-cover'
-              height='636px'
-              alt='...'
-              loading='lazy'
-            />
-
-            <div className='carousel-caption d-none d-md-block heading mb-5'>
-              <Link>
-                <h2 className='text-primary'>Go! Traveler</h2>
-                <h5>Get started</h5>
-              </Link>
-            </div>
-          </div>
-          <div className='carousel-item' data-bs-interval='2000'>
-            <img
-              src='https://images.unsplash.com/photo-1553603227-2358aabe821e?q=80&w=2532&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-              className='d-block w-100'
-              alt='...'
-            />
-            <div className='carousel-caption d-none d-md-block'>
-              <h5>Second slide label</h5>
-              <p>
-                Some representative placeholder content for the second slide.
-              </p>
-            </div>
-          </div>
-          <div className='carousel-item'>
-            <img
-              src='https://images.unsplash.com/photo-1553603227-2358aabe821e?q=80&w=2532&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-              className='d-block w-100'
-              alt='...'
-            />
-            <div className='carousel-caption d-none d-md-block'>
-              <h5>Third slide label</h5>
-              <p>
-                Some representative placeholder content for the third slide.
-              </p>
-            </div>
-          </div>
-        </div>
-        <button
-          className='carousel-control-prev'
-          type='button'
-          data-bs-target='#carouselExampleDark'
-          data-bs-slide='prev'
-        >
-          <span
-            className='carousel-control-prev-icon'
-            aria-hidden='true'
-          ></span>
-          <span className='visually-hidden'>Previous</span>
-        </button>
-        <button
-          className='carousel-control-next'
-          type='button'
-          data-bs-target='#carouselExampleDark'
-          data-bs-slide='next'
-        >
-          <span
-            className='carousel-control-next-icon'
-            aria-hidden='true'
-          ></span>
-          <span className='visually-hidden'>Next</span>
-        </button>
-      </div>
-      <div className='p-3 d-flex justify-content-center'>
-        <h3>大家都在看</h3>
-      </div>
-      <div className='container p-3'>
-        <div className='row'>
-          {products.map((product) => {
-            return (
-              <div className='col-4' key={product.id}>
-                <div className='card img-wrapper mb-4 w-100'>
-                  <img
-                    src={product.imageUrl}
-                    className='card-img-top'
-                    alt='...'
-                    loading='lazy'
-                  />
-
-                  <div className='card-body'>
-                    <h4
-                      className='text-dark'
-                      style={{
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {product.title}
-                    </h4>
-                    <h4
-                      className='text-dark'
-                      style={{
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        position: 'absolute',
-                        bottom: '5rem',
-                        right: '1rem',
-                      }}
-                    >
-                      NTD {product.origin_price}
-                    </h4>
-                    <span className='bg-secondary badge text-dark text-align py-1 '>
-                      <i className='bi bi-tag-fill'></i> {product.category}
-                    </span>
-                    <h6 className='text-primary align-center mt-3'>
-                      {product.price} 人前往
-                    </h6>
-                    <button
-                      type='button'
-                      className='btn btn-primary text-white'
-                      style={{
-                        position: 'absolute',
-                        bottom: '1rem',
-                        right: '1rem',
-                      }}
-                    >
-                      了解更多
-                    </button>
+      ) : (
+        <>
+          <ReactFullpage
+            licenseKey={'YOUR_KEY_HERE'}
+            scrollingSpeed={1000}
+            onLeave={handleLeave}
+            render={() => (
+              <div id='fullpage'>
+                <section className='section' id='slide1'>
+                  <div className='container'>
+                    <div className='row'>
+                      <div className='col-md-12'>
+                        <div className='upper text-center'>
+                          <h2>前往令人心曠神怡的國度</h2>
+                          <p className='mt-2'>威尼斯,義大利</p>
+                        </div>
+                        <div className='lower text-center pb-5'>
+                          <div>
+                            <Link
+                              className='btn1'
+                              to='/productDetail/-NpnOBrW6dnEok0KOMTl'
+                            >
+                              立即訂購
+                            </Link>
+                            <Link className='btn2' to='product'>
+                              查看更多
+                            </Link>
+                          </div>
+                          <div>
+                            <Link className='arrow'>
+                              <i
+                                className='bi bi-chevron-double-down'
+                                style={{ color: 'wheat' }}
+                              ></i>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </section>
+                <section className='section' id='slide2'>
+                  <div className='container'>
+                    <div className='row'>
+                      <div className='col-md-12'>
+                        <div className='upper text-center'>
+                          <h2>展開一段前所未有的旅程</h2>
+                          <p className='mt-2'>雪梨,澳洲</p>
+                        </div>
+                        <div className='lower text-center pb-5'>
+                          <div>
+                            <Link
+                              className='btn1'
+                              to='productDetail/-NpnR1H-T5S9pABr-Db7'
+                            >
+                              前往訂購
+                            </Link>
+                            <Link className='btn2' to='product'>
+                              查看更多
+                            </Link>
+                          </div>
+                          <div>
+                            <Link className='arrow'>
+                              <i
+                                className='bi bi-chevron-double-down'
+                                style={{ color: 'wheat' }}
+                              ></i>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <section className='section' id='slide3'>
+                  <div className='container'>
+                    <div className='row'>
+                      <div className='col-md-12'>
+                        <div className='upper text-center'>
+                          <h2>創造屬於自己的璀璨回憶</h2>
+                          <p className='mt-2'>米蘭,義大利</p>
+                        </div>
+                        <div className='lower text-center pb-5'>
+                          <div>
+                            <Link
+                              className='btn1'
+                              to='productDetail/-NpnQ7X6H7XRKcXRRC85'
+                            >
+                              立即訂購
+                            </Link>
+                            <Link className='btn2' to='product'>
+                              查看更多
+                            </Link>
+                          </div>
+                          <div>
+                            <Link className='arrow'>
+                              <i
+                                className='bi bi-chevron-double-down'
+                                style={{ color: 'wheat' }}
+                              ></i>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <section className='section'>
+                  <div className='container '>
+                    <div
+                      className='row align-items-center mt-sm-3 mt-md-4 mb-2 mb-md-3 mb-lg-4'
+                      data-disable-parallax-down='md'
+                    >
+                      <div className='col-md-6 col-lg-5 order-md-2 prompt-pic'>
+                        <img
+                          src='https://plus.unsplash.com/premium_photo-1663957921642-de7cbeb9d1e4?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                          alt=''
+                          width='auto'
+                          loading='lazy'
+                          style={{ height: '55vmin', borderRadius: '10px' }}
+                        />
+                      </div>
+                      <div
+                        className='col-md-6 col-lg-7 order-md-1 mt-md-n5'
+                        data-disable-parallax-down='md'
+                      >
+                        <h2 className='mb-1 mt-5 prompt-text'>
+                          體驗獨家旅遊行程
+                        </h2>
+                        <p className='fs-lg mb-0 mb-lg-1 prompt-text'>
+                          探索全球絕美風景，品嚐異國美食，開啟一場驚險刺激的冒險之旅！盡情享受奢華度假和文化體驗，讓您的旅行充滿難忘回憶！
+                        </p>
+                        <Swiper
+                          modules={[Navigation, Pagination]}
+                          spaceBetween={10}
+                          slidesPerView={1}
+                          loop={true}
+                        >
+                          {state?.productAll?.map((slide) => {
+                            return (
+                              <SwiperSlide key={slide.id}>
+                                <div className='carousel-pic'>
+                                  <Link to={`/productDetail/${slide.id}`}>
+                                    <img
+                                      src={slide.imageUrl}
+                                      alt='slideImage'
+                                      style={{ borderRadius: '10px' }}
+                                      loading='lazy'
+                                    />
+                                    <div
+                                      className='position-absolute '
+                                      style={{
+                                        right: '108px',
+                                        top: '16px',
+                                        color: 'white',
+                                        fontWeight: 'bolder',
+                                        backgroundColor: 'rgba(0,0,0,.3)',
+                                        padding: '0.5rem',
+                                        borderRadius: '10px',
+                                      }}
+                                    >
+                                      <h4 className='mb-0'>{slide.title}</h4>
+                                    </div>
+                                  </Link>
+                                </div>
+                              </SwiperSlide>
+                            );
+                          })}
+                          <SwiperNavButtons />
+                        </Swiper>
+                      </div>
+                    </div>
+                  </div>
+                </section>
               </div>
-            );
-          })}
-        </div>
-      </div>
-      <div className='container'>
-        <div className='row'>
-          <div className='col-6'>
-            旅遊是一場啟發心靈的冒險，為生活灑下豐富的色彩。透過走遍山川河流，品嚐異國美食，我們拓寬了視野，豐富了思維。旅途中的文化交流和當地人的相遇成為難忘的記憶，彷彿在世界的大舞台上演繹自己的故事。旅行是對不同風土人情的體悟，是學習和成長的機會。每一趟旅程都是一本教科書，教導我們尊重、包容、感恩，並為生活注入無盡的動力，使我們的人生更加豐富而有深度。
-          </div>
-          <div className='col-6 mb-4 mt-3'>
-            <img
-              className='w-100'
-              src='https://images.unsplash.com/photo-1590066861418-0a396745eca0?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-              alt=''
-            />
-          </div>
-        </div>
-      </div>
+            )}
+          />
+        </>
+      )}
     </>
   );
 }

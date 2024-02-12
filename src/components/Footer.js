@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 function Footer() {
   return (
-    <div className='footer bg-primary'>
+    <div className='footer bg-primary ' style={{ zIndex: 999 }}>
       <div className='text-white py-4'>
         <ul className='d-flex justify-content-center fs-4'>
           <li>
@@ -21,7 +21,7 @@ function Footer() {
           </li>
         </ul>
         <p className='mt-3 text-center'>
-          © 2023 / 本網站僅供練習，非實際商業用途
+          2024 / 本網站僅供練習，非實際商業用途
         </p>
       </div>
     </div>

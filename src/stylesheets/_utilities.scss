@@ -1,3 +1,26 @@
-.object-cover{
-    object-fit:cover,
+.object-cover {
+  object-fit: cover;
+}
+
+.img-hover {
+  transition: all 0.3s ease-in;
+  // transform: translate(-50%, -50%);
+}
+.img-hover:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+.img-fluid {
+  height: 536px;
+}
+.navbar-nav .dropdown-menu {
+  width: 100px !important; /* 設置為您希望的寬度 */
+}
+footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
 }
