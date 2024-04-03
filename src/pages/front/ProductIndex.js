@@ -15,7 +15,6 @@ function ProductIndex() {
   useEffect(() => {
     getAllProduct(dispatch);
     getProduct(1, dispatch);
-    console.log(state);
   }, []);
   const getMainPic = async () => {
     try {
@@ -30,7 +29,6 @@ function ProductIndex() {
       });
       const combinedArray = [productData.imageUrl, ...filterImage];
       setTempPic(combinedArray);
-      // setMainPic(productData.imageUrl);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -45,7 +43,6 @@ function ProductIndex() {
       setIsLoading(false); // 加載完成後將isLoading設為false
     }, 1000); // 假設加載完成 時間為1秒
 
-    // 清除定時器
     return () => clearTimeout(timer);
   }, []);
   useEffect(() => {
@@ -60,7 +57,7 @@ function ProductIndex() {
   }, []);
   return (
     <>
-      <h2 className='text-start text-primary mb-1 fw-bold'>熱門景點</h2>
+      <h2 className='text-start text-primary mb-1 fw-bold'>熱門城市</h2>
       {isLoading ? (
         <Loading isLoading={isLoading} />
       ) : (
@@ -91,17 +88,7 @@ function ProductIndex() {
                         >
                           {product.title}
                         </h4>
-                        <h4
-                          className='text-dark'
-                          style={{
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap',
-                            position: 'absolute',
-                            bottom: '3rem',
-                            right: '1rem',
-                          }}
-                        >
+                        <h4 className='text-dark product-price'>
                           NTD {Math.round(product.price).toLocaleString()}
                         </h4>
                         <span className='bg-secondary badge  text-align py-1 '>

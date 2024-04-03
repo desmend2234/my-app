@@ -1,6 +1,12 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Link, Outlet, useOutletContext } from 'react-router-dom';
+import {
+  Link,
+  Outlet,
+  useOutletContext,
+  useSearchParams,
+  useNavigate,
+} from 'react-router-dom';
 import { useContext } from 'react';
 import { ProductContext } from '../store/ProductStore';
 import Loading from '../../components/Loading';
@@ -10,11 +16,26 @@ function ProductLayout() {
   const [categoryList, setCategoryList] = useState([]);
   const [state, dispatch] = useContext(ProductContext);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [keyword, setKeyword] = useState('');
+  const [search, setSearch] = useSearchParams();
+  const navigate = useNavigate();
   useEffect(() => {
     // 在 useEffect 中呼叫 handleCategory，並接收返回的函數
     const unsubscribe = handleCategory(setIsLoading, state, setCategoryList);
   }, [state]);
+
+  const getSearch = (e) => {
+    if (e.key === 'Enter') {
+      setKeyword(e.target.value);
+      setSearch(keyword);
+      navigate(`/search?keyword=${e.target.value}`);
+    }
+  };
+
+  const handleChange = (e) => {
+    setKeyword(e.target.value);
+  };
+
   return (
     <div className='container mt-7 mb-5' style={{}}>
       <div className='row'>
@@ -32,7 +53,7 @@ function ProductLayout() {
                 className='list-group-item list-effect'
                 style={{ border: 'gray solid 1px' }}
               >
-                全部商品
+                全部行程
               </li>
             </Link>
             {categoryList.map((item) => {

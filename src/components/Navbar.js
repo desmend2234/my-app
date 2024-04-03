@@ -1,44 +1,21 @@
-import { Link, NavLink, useNavigate, useSearchParams } from 'react-router-dom';
+import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react';
 import { ProductContext } from '../pages/store/ProductStore';
 import { handleCategory } from './Category';
-import Loading from './Loading';
-import gsap from 'gsap';
-import Search from '../pages/front/Search';
+
 function Navbar() {
   const [state, dispatch] = useContext(ProductContext);
   const [categoryList, setCategoryList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [keyword, setKeyword] = useState('');
-  const [search, setSearch] = useSearchParams();
+
   const navigate = useNavigate();
   useEffect(() => {
-    // 在 useEffect 中呼叫 handleCategory，並接收返回的函數
     handleCategory(setIsLoading, state, setCategoryList);
   }, [state]);
-  console.log(categoryList);
-  const getSearch = (e) => {
-    if (e.key === 'Enter') {
-      setKeyword(e.target.value);
-      setSearch(keyword);
-      navigate(`/search?keyword=${e.target.value}`);
-    }
-  };
 
-  const handleChange = (e) => {
-    setKeyword(e.target.value);
-  };
-  // const handleChange = (e) => {
-  //   const result = state?.productAll?.data?.products?.filter((item) => {
-  //     if (e.target.value === '') return item;
-  //     return item.title.includes(e.target.value);
-  //   });
-  //   console.log(result);
-  //   setSearch({ query: e.target.value, value: result });
-  // };
   return (
     <>
-      <nav className='navbar navbar-expand-lg bg-body-tertiary   sticky-top'>
+      <nav className='navbar navbar-expand-lg bg-body-tertiary sticky-top'>
         <div className='container-fluid '>
           <NavLink className='fw-bold h2 navbar-brand' to='/'>
             TravelSky
@@ -61,17 +38,17 @@ function Navbar() {
                   首頁
                 </NavLink>
               </li>
-              <li className='nav-item dropdown '>
+              <li className='nav-item  '>
                 <NavLink
-                  className='nav-link dropdown-toggle'
-                  href='#'
-                  role='button'
-                  data-bs-toggle='dropdown'
-                  aria-expanded='false'
+                  className='nav-link '
+                  to='/Product'
+                  // role='button'
+                  // data-bs-toggle='dropdown'
+                  // aria-expanded='false'
                 >
-                  產品一覽
+                  熱門旅遊行程
                 </NavLink>
-                <ul
+                {/* <ul
                   className='dropdown-menu ps-0'
                   style={{ textAlign: 'center' }}
                 >
@@ -92,9 +69,9 @@ function Navbar() {
                       </li>
                     );
                   })}
-                </ul>
+                </ul> */}
               </li>
-              <li>
+              {/* <li>
                 <form
                   className='d-flex position-absolute '
                   style={{ right: '100px', top: '10px' }}
@@ -116,16 +93,16 @@ function Navbar() {
                     <i className='bi bi-search'></i>
                   </button>
                 </form>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <NavLink
                   to='login'
-                  className='d-flex me-5 position-absolute '
-                  style={{ right: '450px', top: '20px' }}
+                  className='nav-item position-absolute'
+                  style={{ right: '100px', top: '20px' }}
                 >
                   管理員登入
                 </NavLink>
-              </li>
+              </li> */}
             </ul>
             <div
               className='d-flex me-5 position-absolute '

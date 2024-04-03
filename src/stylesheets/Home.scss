@@ -364,5 +364,10 @@ a {
 }
 .prompt-pic {
   display: flex;
-  justify-content: end;
+  justify-content: center;
+  @media screen and (max-width: 768px) {
+    .element {
+      margin-top: 2rem;
+    }
+  }
 }

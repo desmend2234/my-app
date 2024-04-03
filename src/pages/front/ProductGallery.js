@@ -1,9 +1,7 @@
 import gsap from 'gsap';
-
 import { Link, useParams } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react';
 import { ProductContext } from '../store/ProductStore';
-import ProductDetail from './ProductDetail';
 import Loading from '../../components/Loading';
 
 function ProductGallery() {
@@ -23,8 +21,8 @@ function ProductGallery() {
   return (
     <>
       {state.product.map((item) => {
-        if (item.category === currentCategory) {
-          return (
+        return (
+          item.category === currentCategory && (
             <div className='d-flex col-lg-4 col-md-9 ' key={item.id}>
               <Loading isLoading={isLoading} />
               <div className='card border-0 mb-4 position-relative h-100 '>
@@ -50,19 +48,9 @@ function ProductGallery() {
                     >
                       {item.title}
                     </Link>
-                    <h4
-                      className='text-dark'
-                      style={{
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        position: 'absolute',
-                        bottom: '3rem',
-                        right: '1rem',
-                      }}
-                    >
+                    <p className='text-dark product-price'>
                       NTD {Math.round(item.price).toLocaleString()}
-                    </h4>
+                    </p>
                     <br />
                     <span className='bg-secondary badge text-dark text-align py-1 '>
                       <i className='bi bi-tag-fill'></i> {item.category}
@@ -87,8 +75,8 @@ function ProductGallery() {
                 </div>
               </div>
             </div>
-          );
-        }
+          )
+        );
       })}
     </>
   );

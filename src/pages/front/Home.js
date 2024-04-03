@@ -6,14 +6,14 @@ import { Link } from 'react-router-dom';
 import Loading from '../../components/Loading';
 import { useContext, useState, useEffect } from 'react';
 import { ProductContext } from '../store/ProductStore';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { SwiperNavButtons } from '../../components/SwiperNavButtons';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import { getProduct, getAllProduct } from '../store/ProductStore';
+import { getAllProduct } from '../store/ProductStore';
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,7 +25,6 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    // 假設首頁加載完成後需要做一些異步操作，這裡使用setTimeout模擬
     const timer = setTimeout(() => {
       setIsLoading(false); // 加載完成後將isLoading設為false
     }, 1000); // 假設加載完成時間為1秒
@@ -105,7 +104,7 @@ function Home() {
                     <div className='row'>
                       <div className='col-md-12'>
                         <div className='upper text-center'>
-                          <h2>前往令人心曠神怡的國度</h2>
+                          <h2>透過TravelSky訂購行程，前往令人心曠神怡的國度</h2>
                           <p className='mt-2'>威尼斯,義大利</p>
                         </div>
                         <div className='lower text-center pb-5'>

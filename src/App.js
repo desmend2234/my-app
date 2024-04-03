@@ -19,7 +19,6 @@ import Login from './pages/admin/Login';
 import AdminCoupons from './pages/admin/AdminCoupons';
 import AdminOrders from './pages/admin/AdminOrders';
 import Search from './pages/front/Search';
-
 function App() {
   const [state, dispatch] = useReducer(productReducer, initState);
 

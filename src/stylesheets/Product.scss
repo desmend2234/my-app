@@ -25,3 +25,11 @@
   border-right: 1px solid rgba(0, 0, 0, 0.5);
   height: 100%;
 }
+.product-price {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: absolute;
+  right: 0rem;
+  font-size: 1rem;
+}

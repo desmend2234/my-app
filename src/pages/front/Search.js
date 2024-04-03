@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useSearchParams, Link } from 'react-router-dom';
 import Loading from '../../components/Loading';
 function Search() {
   const [products, setProducts] = useState([]);
@@ -53,7 +52,6 @@ function Search() {
                             className='card-img-top'
                             alt='...'
                             loading='lazy'
-                            // height='70rem'
                           />
                           <Link to={`/productDetail/${product.id}`}>
                             <div className='card-body'>
@@ -87,18 +85,6 @@ function Search() {
                               <h6 className='text-primary align-center mt-3'>
                                 {product.origin_price} 人前往
                               </h6>
-
-                              {/* <button
-                          type='button'
-                          className='btn btn-primary text-white'
-                          style={{
-                            position: 'absolute',
-                            bottom: '1rem',
-                            right: '1rem',
-                          }}
-                        >
-                          了解更多
-                        </button> */}
                             </div>
                           </Link>
                         </div>
@@ -106,7 +92,6 @@ function Search() {
                     );
                   })}
                 </div>
-                {/* <Pagination changePage={getProduct} pagination={state.page} /> */}
               </div>
             )}
           </div>

@@ -32,7 +32,6 @@ function Cart() {
   };
   useEffect(() => {
     getCart();
-    console.log(state);
   }, []);
 
   const removeCartItem = async (id) => {

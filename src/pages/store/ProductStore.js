@@ -1,4 +1,4 @@
-import { createContext, useEffect } from 'react';
+import { createContext } from 'react';
 import axios from 'axios';
 export const ProductContext = createContext({});
 
@@ -47,8 +47,8 @@ export async function getProduct(page = 1, dispatch) {
     const res = await axios.get(
       `/v2/api/${process.env.REACT_APP_API_PATH}/products?page=${page}`
     );
-    console.log(res);
     dispatch({ type: 'GET_PRODUCTS', payload: res.data.products });
+    console.log(res.data.products);
     dispatch({ type: 'GET_PAGE', payload: res.data.pagination });
   } catch (error) {
     console.log(error);
@@ -59,6 +59,5 @@ export async function getAllProduct(dispatch) {
   const res = await axios.get(
     `/v2/api/${process.env.REACT_APP_API_PATH}/products/all`
   );
-  console.log(res);
   dispatch({ type: 'GET_ALL_PRODUCTS', payload: res.data.products });
 }
